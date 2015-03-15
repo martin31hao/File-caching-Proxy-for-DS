@@ -1,4 +1,4 @@
-# File-caching-Proxy-for-DS 
+# File-caching Proxy for distributed systems 
 
 
 ## Synopsis
