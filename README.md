@@ -1,17 +1,18 @@
-# File-caching-Proxy-for-DS
-
-A LRU file caching proxy with one-copy semantic for distributed system to improve performance of file operations between client and server
+# File-caching-Proxy-for-DS 
 
 
 ## Synopsis
+
+This is a LRU file caching proxy with one-copy semantic for distributed systems to improve performance on file operations between client and server
+
 
 ## Code Example
 
 The tools directory contains binary tools that perform I/O operations. These will work on Linux x86 64-bit platforms (e.g., Andrew servers).
 
-The lib directory has lib440lib.so. This is an interposition library that will redirect file operations to RPC calls. It is used just like mylib.so in [a link](https://github.com/martin31hao/C-lib-for-data-serialization/tree/master/Interpose):
+The lib directory has lib440lib.so. This is an interposition library that will redirect file operations to RPC calls. It is used just like mylib.so in [this project](https://github.com/martin31hao/C-lib-for-data-serialization/tree/master/Interpose):
 
-LD_PRELOAD=lib/lib440lib.so tools/440read foo
+    LD_PRELOAD=lib/lib440lib.so tools/440read foo
 
 (Use env if you are not running bash).
 
@@ -33,15 +34,23 @@ The src directory has a server and proxy implementation of a server and proxy cl
 To compile the proxy, make sure your CLASSPATH environment variable includes the absolute paths
 to the lib and sample directories:
 
-export CLASSPATH=$PWD/lib:$PWD/src
+    export CLASSPATH=$PWD/lib:$PWD/src
 
 (Use setenv if not using bash).
 
 Then cd into the src directory and run make.  Now you can run the proxy using:
 
-proxyport15440=XXXX java Proxy
+    java Proxy 127.0.0.1 11122 /tmp/cache 100000
+
+with a server address of 127.0.0.1, port 11122, cache directory /tmp/cache, and 10^5 byte cache size limit
 
 Running a tool with the LD_PRELOAD of lib440lib.so will connect to the Proxy, though none of the operations are actually implemented.
+
+To run Server, Server arguments will be provided like in this example:
+
+    java Server 11122 fileroot
+
+with a server port of 11122 and serving files in fileroot.
 
 
 ## Contributors
